@@ -32,3 +32,24 @@ class UsuarioDAO:
         
         return lista_usaurio_vo
         
+    def consultar_por_correo(self, email):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+
+                cursor = conexion.cursor()
+
+                sql = "SELECT * FROM Usuario WHERE Email = ?;"
+
+                cursor.execute(sql, (email,))
+
+                informacion_usuario = cursor.fetchone()
+
+                usuario = UsuarioVO(ID_usuario=informacion_usuario[0],
+                                     fecha_registro=informacion_usuario[1],
+                                      email=informacion_usuario[2], 
+                                      nombre=informacion_usuario[3], 
+                                      configuracion=informacion_usuario[4])
+                return usuario
+        except Error as e:
+            print(f"Error al consultar por correo {e}")
+            return e

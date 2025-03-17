@@ -23,6 +23,10 @@ class Controlador:
     def _setup_handlers(self):
 
         
+        #handler cambiar vista principal
+        def handler_cambiar_vista_principal():
+            self.stacked_manager.cambiar_vista(self.stacked_manager.vista_principal.indice)
+
         # handler cambiar vista secundaria
         def handler_cambiar_vista_secundaria():
             self.stacked_manager.cambiar_vista(self.stacked_manager.vista_secundaria.indice)
@@ -31,9 +35,15 @@ class Controlador:
 
         def handler_usuario_selected(x):
             print("cambiando usuario",x)
+            usuario_vo = self.usuario_dao.consultar_por_correo(x)
+            print(usuario_vo)
+            self.stacked_manager.vista_secundaria.set_usuario_actual(usuario_vo)
+            handler_cambiar_vista_secundaria()
+            # self.stacked_manager.vista_secundaria.usuario_actual = usuario_vo
 
 
         self.stacked_manager.vista_principal.w["menu_usuarios"].activated[str].connect(handler_usuario_selected)
+        self.stacked_manager.vista_secundaria.w["btn_cerrar_sesion"].clicked.connect(handler_cambiar_vista_principal)
     def mainloop(self):
         # Configurar los handlers
         self._setup_handlers()
