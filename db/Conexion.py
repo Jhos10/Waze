@@ -14,5 +14,4 @@ class Conexion:
             print("Error de conexión con la BD")
             print(e)
             print("----------------------------")
-        print(self.conexion)
         return self.conexion

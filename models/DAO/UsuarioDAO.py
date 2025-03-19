@@ -2,7 +2,7 @@ from db.Conexion import Conexion
 from models.VO.UsuarioVO import UsuarioVO
 from typing import List
 from sqlite3 import Error
-
+from models.DAO import ConfiguracionDAO
 class UsuarioDAO:
     
     def __init__(self):
@@ -44,11 +44,14 @@ class UsuarioDAO:
 
                 informacion_usuario = cursor.fetchone()
 
+                configuracion_dao = ConfiguracionDAO.ConfiguracionDAO()
+                configuracion = configuracion_dao.consultar_config_usuario(informacion_usuario[4])
+
                 usuario = UsuarioVO(ID_usuario=informacion_usuario[0],
                                      fecha_registro=informacion_usuario[1],
                                       email=informacion_usuario[2], 
                                       nombre=informacion_usuario[3], 
-                                      configuracion=informacion_usuario[4])
+                                      configuracion=configuracion)
                 return usuario
         except Error as e:
             print(f"Error al consultar por correo {e}")
