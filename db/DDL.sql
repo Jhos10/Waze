@@ -39,7 +39,7 @@ CREATE TABLE Usuario (
     Email VARCHAR(40),
     Nombre VARCHAR(30),
     ID_Config INTEGER NOT NULL,
-    FOREIGN KEY (ID_Config) REFERENCES Configuracion(id_configuracion)
+    FOREIGN KEY (ID_Config) REFERENCES Configuracion(id_configuracion) ON DELETE CASCADE
 );
 
 

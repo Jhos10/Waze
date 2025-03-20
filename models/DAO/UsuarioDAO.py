@@ -42,12 +42,14 @@ class UsuarioDAO:
 
     def eliminarUsuario(self,usuario_vo:UsuarioVO):
         try:
+            configuracion_dao = ConfiguracionDAO.ConfiguracionDAO()
+            configuracion_dao.eliminar_configuracion(usuario_vo.configuracion)
             with self.objeto_conexion.crear_conexion() as conexion:
                 sql = "DELETE FROM Usuario WHERE ID_Usuario = ?;"
                 cursor = conexion.cursor()
                 cursor.execute(sql,(usuario_vo.ID_usuario,))
                 conexion.commit()
-                return cursor.lastrowid
+            return cursor.lastrowid
         except Error as e:
             print(f"Hubo un error en eliminar usuario: {e}")
             return False
@@ -95,7 +97,8 @@ class UsuarioDAO:
                                       email=informacion_usuario[2], 
                                       nombre=informacion_usuario[3], 
                                       configuracion=configuracion)
-                return usuario
+                # conexion.close()
+            return usuario
         except Error as e:
             print(f"Error al consultar por correo {e}")
             return e

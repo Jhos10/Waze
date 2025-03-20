@@ -238,7 +238,7 @@ class VistaEliminarUsuario(QDialog):
             self.layout_principal.addWidget(w)
         
         self.setLayout(self.layout_principal)
-        self.w['btn_cancelar'].clicked.connect(self.accept)
+        self.w['btn_elminar'].clicked.connect(self.accept)
         self.w['btn_cancelar'].clicked.connect(self.accept)
 
 class VistaModificarCuenta(QWidget):

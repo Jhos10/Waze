@@ -33,14 +33,29 @@ class ConfiguracionDAO:
 
                 cursor = conexion.cursor()
                 cursor.execute(sql)
-                # conexion.commit()
+                conexion.commit()
                 configuracion_vo = ConfiguracionVO(Id_configuracion=cursor.lastrowid,unidadDistancia='Kilómetros',notificaciones= 1,modo='Día', placa='0000',idioma= idioma_vo,voz=voz_vo,icono=icono_vo)
 
-            return configuracion_vo
+                return configuracion_vo
         except Error as e:
             print(f'Hubo un erro en la configuracion: {e}')
             return False
+        
+    def eliminar_configuracion(self,configuracion_eliminar: ConfiguracionVO)->ConfiguracionVO:
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+                sql = "DELETE FROM Configuracion WHERE id_configuracion = ?;"
+                cursor = conexion.cursor()
+                cursor.execute(sql,(configuracion_eliminar.Id_configuracion,))
+                conexion.commit()
 
+            return True
+                
+        except Error as e:
+            print(f"Hubo un error al momento de eliminar la configuraciond del usuario {e}")
+            return False
+            
+            
 
 
 
