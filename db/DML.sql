@@ -33,8 +33,8 @@ VALUES
 
 INSERT INTO Icono (Tipo_icono, Image)
 VALUES 
-('Carro', NULL),
-('Moto', NULL);
+('Carro','.\\images\\iconos\\carro-deportivo.png'),
+('Moto', '.\\images\\iconos\\moto.png');
 
 
 INSERT INTO Configuracion (UnidadesDistancia, Notificaciones, Modo, Placa, ID_Idioma, ID_Voz, ID_Icono)

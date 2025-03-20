@@ -50,4 +50,20 @@ class ConfiguracionDireccionesDAO:
                 return cursor.lastrowid
         except Error as e:
             print(f"Hubo un error al momento de agregar configuracion: {e}")
+
+    
+    def eliminar_direcion(self, usuario:UsuarioVO, direccion:DireccionVO):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+                
+                cursor = conexion.cursor()
+
+                sql="DELETE FROM Configuracion_Direcciones WHERE ID_direccion = ? AND ID_configuracion = ?"
+
+                cursor.execute(sql, (direccion.id_direccion, usuario.configuracion.Id_configuracion))
+
+                conexion.commit()
+
+        except Error as e:
+            print(f"Hubo un erro al eliminar direccion {e}")
             

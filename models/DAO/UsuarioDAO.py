@@ -1,5 +1,6 @@
 from db.Conexion import Conexion
 from models.VO.UsuarioVO import UsuarioVO
+from models.VO.ConfiguracionVO import ConfiguracionVO
 from typing import List
 from sqlite3 import Error
 from models.DAO import ConfiguracionDAO
@@ -8,8 +9,50 @@ class UsuarioDAO:
     def __init__(self):
         # Se intancia el objeto conexion
         self.objeto_conexion = Conexion()
+        # Usuario actual
+        self.usuario_actual = None
 
-    
+    def nuevo_usuario(self,nuevo_usuario:UsuarioVO)->int:
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+
+                configuracion_dao = ConfiguracionDAO.ConfiguracionDAO()
+                configuracion_vo = configuracion_dao.configuracion_predeterminada()
+                print(configuracion_vo)
+                sql = """
+                    INSERT INTO Usuario(
+                        Fecha_registro,
+                        Email,
+                        Nombre,
+                        ID_Config
+                    )
+                    VALUES (
+                    datetime('now'),
+                    ?,
+                    ?,
+                    ?
+                    );
+                """
+
+                cursor = conexion.cursor()
+                cursor.execute(sql, (nuevo_usuario.email,nuevo_usuario.nombre,configuracion_vo.Id_configuracion))
+                conexion.commit()
+        except Error as e:
+            print(f"Hubo un error al general el usuario: {e}")
+
+    def eliminarUsuario(self,usuario_vo:UsuarioVO):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+                sql = "DELETE FROM Usuario WHERE ID_Usuario = ?;"
+                cursor = conexion.cursor()
+                cursor.execute(sql,(usuario_vo.ID_usuario,))
+                conexion.commit()
+                return cursor.lastrowid
+        except Error as e:
+            print(f"Hubo un error en eliminar usuario: {e}")
+            return False
+            
+
     def consultar(self)->List[UsuarioVO]:
         try:
             with self.objeto_conexion.crear_conexion() as conexion:
@@ -38,7 +81,7 @@ class UsuarioDAO:
 
                 cursor = conexion.cursor()
 
-                sql = "SELECT * FROM Usuario WHERE Email = ?;"
+                sql = "SELECT * FROM Usuario WHERE Email = ?"
 
                 cursor.execute(sql, (email,))
 
@@ -55,4 +98,40 @@ class UsuarioDAO:
                 return usuario
         except Error as e:
             print(f"Error al consultar por correo {e}")
+            return e
+        
+    def completar_informacion_Usuario(self,usuario_vo:UsuarioVO):
+        configuracion_dao = ConfiguracionDAO.ConfiguracionDAO()
+        self.usuario_actual = usuario_vo
+        # self.usuario_actual
+
+
+    def actualizar_nombre(self, nuevo_nombre:str, usuario_actual: UsuarioVO):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+
+                cursor = conexion.cursor()
+
+                sql = "UPDATE Usuario SET Nombre = ? WHERE ID_Usuario = ?"
+
+                cursor.execute(sql, (nuevo_nombre,usuario_actual.ID_usuario))
+                usuario_actual.nombre = nuevo_nombre
+                return usuario_actual
+        except Error as e:
+            print(f"Error al actualizar el nombre {e}")
+            return e
+
+    def actualizar_email(self, nuevo_email:str, usuario_actual: UsuarioVO):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+
+                cursor = conexion.cursor()
+
+                sql = "UPDATE Usuario SET Email = ? WHERE ID_Usuario = ?"
+
+                cursor.execute(sql, (nuevo_email,usuario_actual.ID_usuario))
+
+                return True
+        except Error as e:
+            print(f"Error al actualizar el nombre {e}")
             return e

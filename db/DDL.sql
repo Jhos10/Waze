@@ -14,7 +14,7 @@ CREATE TABLE Voz (
 CREATE TABLE Icono (
     ID_icono INTEGER PRIMARY KEY AUTOINCREMENT,
     Tipo_icono VARCHAR(20),
-    Image BLOB
+    Image VARCHAR(20)
 );
 
 

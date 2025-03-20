@@ -40,7 +40,29 @@ class IdiomaDAO:
                 # Se escribe la sentencia sql
                 sql = "SELECT * FROM Idioma WHERE nombre_idioma = ?"
                 # Se ejeucta la sentencia
-                cursor.execute(sql, (idioma))
+                cursor.execute(sql, (idioma,))
+                # Se obtiene la respuesta de la bd
+                informacion_idiomas = cursor.fetchone()
+                # Se mapea la respuesta de la bd a una lista de usuarios vo
+                print(informacion_idiomas)
+                idioma_vo = IdiomaVO(id_idioma=informacion_idiomas[0], nombre_idioma=informacion_idiomas[1])
+
+                return idioma_vo
+            
+        except Error as e:
+            # Se imprime el error de la base de datos
+            print(f"Error al consultar idiomas: {e}")
+
+    
+    def consultar_idioma_por_id(self, id_idioma: int):
+        try:
+            with self.objeto_conexion.crear_conexion() as conexion:
+                # Se instancia el cursor a la base de datos
+                cursor = conexion.cursor()
+                # Se escribe la sentencia sql
+                sql = "SELECT * FROM Idioma WHERE ID_idioma = ?"
+                # Se ejeucta la sentencia
+                cursor.execute(sql, (id_idioma,))
                 # Se obtiene la respuesta de la bd
                 informacion_idiomas = cursor.fetchone()
                 # Se mapea la respuesta de la bd a una lista de usuarios vo
@@ -50,6 +72,7 @@ class IdiomaDAO:
             
         except Error as e:
             # Se imprime el error de la base de datos
-            print(f"Error al consultar idiomas: {e}")
+            print(f"Error al consultar idioma: {e}")
+
 
 

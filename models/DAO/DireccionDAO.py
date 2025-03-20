@@ -47,6 +47,7 @@ class DireccionDAO:
                 direccion = DireccionVO(id_direccion=info_direccion[0], direccion=info_direccion[1])
 
                 return direccion
+            
         except Error as e:
             print(f"Error al consultar id direccion {e}")
 
