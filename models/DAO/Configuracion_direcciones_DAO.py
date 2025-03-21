@@ -43,6 +43,7 @@ class ConfiguracionDireccionesDAO:
                     )
                 """
                 cursor = conexion.cursor()
+                print(usuario)
                 cursor.execute(sql,(direccion.id_direccion,usuario.configuracion.Id_configuracion,))
                 
                 conexion.commit()

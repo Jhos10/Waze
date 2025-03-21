@@ -147,7 +147,7 @@ class Controlador:
             direccion_vo = self.direccion_dao.consultar_id_direccion(direccion)
 
         
-            self.config_direcciones.nueva_config_direccion(usuario=self.usuario_dao.usuario_actual,
+            self.config_direcciones.nueva_config_direccion(usuario=self.stacked_manager.vista_secundaria.usuario_actual,
                                                             direccion=direccion_vo)
 
             handler_cambiar_vista_direccion()
