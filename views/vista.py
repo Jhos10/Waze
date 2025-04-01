@@ -229,7 +229,7 @@ class VistaEliminarUsuario(QDialog):
         self.setWindowTitle("Eliminar usuario")
         self.setGeometry(100,100,500,500)
         self.w = dict()
-        self.w['label_eliminar'] = QLabel("Esta seguro de elimar el usuairo")
+        self.w['label_eliminar'] = QLabel("Esta seguro de eliminar el usuario")
         self.w['btn_elminar'] = QPushButton("Aceptar")
         self.w['btn_cancelar'] = QPushButton("Cancelar")
 

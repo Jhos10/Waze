@@ -1,4 +1,5 @@
 import sqlite3
+from peewee import *
 
 
 class Conexion:
@@ -15,3 +16,7 @@ class Conexion:
             print(e)
             print("----------------------------")
         return self.conexion
+    
+class ConexionORM:
+    ruta = ".\db\Waze.db"
+    conexion = SqliteDatabase(ruta)

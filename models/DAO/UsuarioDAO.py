@@ -4,6 +4,8 @@ from models.VO.ConfiguracionVO import ConfiguracionVO
 from typing import List
 from sqlite3 import Error
 from models.DAO import ConfiguracionDAO
+from peewee import *
+
 class UsuarioDAO:
     
     def __init__(self):

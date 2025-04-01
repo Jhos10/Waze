@@ -284,7 +284,7 @@ class Controlador:
         #Asignar botones de la vista direccion
         self.stacked_manager.vista_direccion.w['btn_nueva'].clicked.connect(handler_agregar_direccion) 
         self.stacked_manager.vista_direccion.w['bt_regresar_vista_sec'].clicked.connect(handler_cambiar_vista_secundaria)
-        self.stacked_manager.vista_direccion.w['btn_eliminar_direccion'].clicked.connect(handler_mostrar_eliminar_cuenta)
+        self.stacked_manager.vista_direccion.w['btn_eliminar_direccion'].clicked.connect(handler_eliminar_direccion)
 
         # Asignar botones de la vista idioma_voz
         self.stacked_manager.vista_idioma_voz.w['btn_guardar_idioma'].clicked.connect(handler_actualizar_idioma)
